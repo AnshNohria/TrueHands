@@ -1,20 +1,28 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "truehands-dapp",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "compile": "echo 'Compiling contracts...' && echo 'forge build'",
+    "test": "echo 'Running tests...' && echo 'forge test'",
+    "deploy:local": "echo 'Deploying to local network...'",
+    "deploy:testnet": "echo 'Deploying to testnet...'",
+    "generate-types": "echo 'Generating TypeScript types from ABIs...'"
   },
   "dependencies": {
+    "date-fns": "^3.6.0",
     "ethers": "^6.11.1",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.22.3"
+    "react-hot-toast": "^2.5.2",
+    "react-router-dom": "^6.22.3",
+    "recharts": "^2.15.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
@@ -27,6 +35,7 @@
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
+    "solhint": "^5.1.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",

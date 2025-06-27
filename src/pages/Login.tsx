@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMetaMask } from '../hooks/useMetaMask';
 
@@ -24,7 +24,7 @@ function Login() {
     if (!SUPPORTED_CHAIN_IDS.includes(chainId!)) {
       try {
         await switchNetwork(SUPPORTED_CHAIN_IDS[0]);
-      } catch (err) {
+      } catch {
         return;
       }
     }

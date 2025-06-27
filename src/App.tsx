@@ -14,7 +14,7 @@ import WorkRecords from './pages/employer/WorkRecords';
 import ComplianceMetrics from './pages/employer/ComplianceMetrics';
 
 // Worker Pages
-import WorkerDashboard from './pages/worker/DashboardHome';
+import WorkerDashboard from './pages/worker/WorkerDashboard';
 import WorkerProfile from './pages/worker/Profile';
 import WorkHistory from './pages/worker/WorkHistory';
 import EarningSummary from './pages/worker/EarningSummary';

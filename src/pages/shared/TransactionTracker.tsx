@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 function TransactionTracker() {
@@ -68,3 +67,5 @@ function TransactionTracker() {
     </div>
   );
 }
+
+export default TransactionTracker;

@@ -1,8 +1,18 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
-interface Window {
-  ethereum?: any;
+interface MetaMaskEthereum {
+  isMetaMask?: boolean;
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+  on: (event: string, handler: (...args: unknown[]) => void) => void;
+  removeListener: (event: string, handler: (...args: unknown[]) => void) => void;
+  removeAllListeners: (event: string) => void;
+}
+
+declare global {
+  interface Window {
+    ethereum?: MetaMaskEthereum;
+  }
 }
 
 export function useMetaMask() {
@@ -22,45 +32,56 @@ export function useMetaMask() {
 
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
-      });
+      }) as string[];
 
       if (accounts.length > 0) {
         setAccount(accounts[0]);
         setError(null);
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+      setError(errorMessage);
     }
   };
 
   const switchNetwork = async (targetChainId: number) => {
     try {
+      if (!window.ethereum) {
+        throw new Error('MetaMask is not installed');
+      }
+      
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: `0x${targetChainId.toString(16)}` }],
       });
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+      setError(errorMessage);
     }
   };
 
   useEffect(() => {
     if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
+      const handleAccountsChanged = (...args: unknown[]) => {
+        const accounts = args[0] as string[];
         setAccount(accounts[0] || null);
-      });
+      };
 
-      window.ethereum.on('chainChanged', (newChainId: string) => {
+      const handleChainChanged = (...args: unknown[]) => {
+        const newChainId = args[0] as string;
         setChainId(Number(newChainId));
-      });
-    }
+      };
 
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeAllListeners('accountsChanged');
-        window.ethereum.removeAllListeners('chainChanged');
-      }
-    };
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
+
+      return () => {
+        if (window.ethereum) {
+          window.ethereum.removeAllListeners('accountsChanged');
+          window.ethereum.removeAllListeners('chainChanged');
+        }
+      };
+    }
   }, []);
 
   return {

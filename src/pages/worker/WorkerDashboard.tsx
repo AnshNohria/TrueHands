@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Profile from './Profile';
 import WorkHistory from './WorkHistory';
@@ -15,3 +14,5 @@ function WorkerDashboard() {
     </Routes>
   );
 }
+
+export default WorkerDashboard;

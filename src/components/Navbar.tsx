@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Building2, UserCircle, LayoutDashboard, History } from 'lucide-react';
 import { useUser } from '../context/UserContext';
 
-function Navbar() {
+export default function Navbar() {
   const location = useLocation();
   const { user } = useUser();
 
@@ -18,7 +17,7 @@ function Navbar() {
             </Link>
             
             <div className="hidden md:flex space-x-4">
-              {user?.type === 'employer' ? (
+              {user?.role === 'employer' ? (
                 <>
                   <Link to="/employer" className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium ${location.pathname.startsWith('/employer') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-700 hover:text-indigo-600'}`}>
                     <LayoutDashboard className="h-4 w-4" />
