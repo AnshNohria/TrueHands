@@ -111,10 +111,10 @@ contract WorkerRegistry {
     /**
      * @dev Update worker end date (terminate employment)
      */
-    function updateWorkerEndDate(address _worker, uint256 _endDate) 
-        external 
-        onlyAuthorizedEmployer 
-        workerExists(_worker) 
+    function updateWorkerEndDate(address _worker, uint256 _endDate)
+        external
+        onlyAuthorizedEmployer
+        workerExists(_worker)
     {
         require(workers[_worker].employer == msg.sender, "Not worker's employer");
         require(_endDate >= workers[_worker].startDate, "End date before start date");
@@ -150,8 +150,8 @@ contract WorkerRegistry {
     /**
      * @dev Get worker details
      */
-    function getWorkerDetails(address _worker) 
-        external 
+    function getWorkerDetails(address _worker)
+        external
         view 
         returns (
             string memory name,
